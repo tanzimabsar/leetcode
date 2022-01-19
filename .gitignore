@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+.vs_code/
+env/
+*.pytest_cache
+*.pyc
 .DS_Store
 
 # C extensions
