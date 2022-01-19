@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-.vs_code/
+.vscode/
 env/
 *.pytest_cache
 *.pyc
