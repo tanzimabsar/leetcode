@@ -2,9 +2,12 @@
 
 __author__ = "Tanzim Absar"
 
+from tracemalloc import start
 from typing import List
 import operator
 from itertools import permutations
+
+from cairo import FillRule
 
 
 class HighScoringWords:
@@ -75,5 +78,20 @@ class HighScoringWords:
         :param starting_letters: a random string of letters from which to build words that are valid against the contents of the wordlist.txt file
         :return: The list of top buildable words.
         """
+        from itertools import permutations
 
-        pass
+        # filter the word list to search through some of them
+        filtered_word_list = [x for x in word_list if len(x) <= len(starting_letters)]
+
+        # create a list of combinations of letters, order matters
+        all_permutations = [''.join(p) for p in permutations(starting_letters)]
+
+        results = []
+
+        for possible_match in all_permutations:
+            for index, value in enumerate(possible_match):
+                substring = possible_match[index: len(possible_match)]
+                if substring in filtered_word_list:
+                    results.append(substring)
+
+        return results
