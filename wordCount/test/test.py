@@ -64,12 +64,25 @@ class TestHighScoringWords(unittest.TestCase):
         leaderboard = highscoringwords.HighScoringWords(
             "data/wordlist.txt", "data/letterValues.txt"
         )
-        results = leaderboard.build_leaderboard_for_letters(
-            "deora", leaderboard.valid_words
+        list_of_results, scores = leaderboard.build_leaderboard_for_letters(
+            "bulx"
         )
-        # interesting situation, where this test is not idempotent
-        # need more time to debug this as this test does not return the same output
-        assert "adore" in results 
+
+        self.assertNotIn("bull", list_of_results)
+
+        list_of_results, scores = leaderboard.build_leaderboard_for_letters(
+            "deora"
+        )
+
+        self.assertNotIn("derazs", list_of_results)
+        self.assertIn("read", list_of_results)
+
+    def test_ordering_of_leader_board(self):
+        leaderboard = highscoringwords.HighScoringWords(
+            "data/sample_wordlist.txt", "data/letterValues.txt"
+        )
+        leaderboard, scores = leaderboard.build_leaderboard_for_word_list()
+        self.assertEquals(scores[0], ('aardwolves', 17))
 
     def tearDown(self):
         logger.removeHandler(stream_handler)
